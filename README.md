@@ -1,0 +1,2 @@
+# QTelnetServer
+Qt telnet server
