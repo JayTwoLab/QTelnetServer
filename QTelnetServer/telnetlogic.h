@@ -22,7 +22,7 @@ public:
 
 protected:
 
-    // QMap<QString, > commandMap;
+    QString strCR;
 
 
 };

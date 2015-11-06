@@ -8,6 +8,7 @@
 TelnetLogic::TelnetLogic(QObject *parent)
     : QObject(parent)
 {
+    strCR = "\r\n";
 }
 
 //----------------------------------------------------------------------------
