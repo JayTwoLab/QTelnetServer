@@ -1,4 +1,6 @@
 
+#include <iostream>
+
 #include "telnettcpclient.h"
 #include "telnettcpserver.h"
 
@@ -24,11 +26,11 @@ int TelnetTCPServer::StartServer(qint16 port)
 
     if( ! this->listen( QHostAddress::Any, port ) )
     {
-        qDebug() << "Could not start server";
+        std::cerr << " could not start server\n";
         return (-1);
     }
 
-    qDebug() << "Listening...";
+    std::cout << "listening...\n";
 
     //notify connected objects
     emit OnStarted();
@@ -42,7 +44,7 @@ void TelnetTCPServer::StopServer()
 {
     this->close();
 
-    qDebug() << "Server stopped";
+    std::cout << " server stopped\n";
 
     //notify connected objects
     emit OnStopped();
@@ -53,7 +55,7 @@ void TelnetTCPServer::StopServer()
 //
 void TelnetTCPServer::incomingConnection(int socketDescriptor)
 {
-    qDebug() << socketDescriptor << " Connecting..." << socketDescriptor;
+    std::cout << socketDescriptor << " Connecting..." << socketDescriptor << "\n";
 
     //Accept the incomming client
 

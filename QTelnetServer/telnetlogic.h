@@ -1,12 +1,30 @@
 #ifndef TELNETLOGIC_H
 #define TELNETLOGIC_H
 
+#include <QtGlobal>
 #include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QByteArray>
+#include <QMap>
+#include <QVector>
+#include <QList>
 
-class TelnetLogic
+class TelnetLogic : public QObject
 {
+    Q_OBJECT
+
 public:
-    TelnetLogic();
+
+    explicit TelnetLogic(QObject *parent = 0);
+
+    QString ProcessCommand(QString command);
+
+protected:
+
+    // QMap<QString, > commandMap;
+
+
 };
 
 #endif // TELNETLOGIC_H

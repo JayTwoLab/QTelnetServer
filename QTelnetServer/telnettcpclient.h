@@ -11,6 +11,8 @@
 #include <QSettings>
 #include <QFileInfo>
 
+class TelnetLogic;
+
 class TelnetTCPClient : public QObject
 {
     Q_OBJECT
@@ -58,11 +60,6 @@ public slots:
     void SendResponse(const char* data);
 
     /*!
-    * Slot for the QProcess ReadreadyReadStandardOutput()
-    */
-    void ProcessReadyRead();
-
-    /*!
     * Closes the socket
     */
     void CloseSocket();
@@ -73,18 +70,21 @@ protected:
 
     QTcpSocket *Socket;     //! The TCP Socket
 
-    QProcess *Process;      //! The Command line process
+    // QProcess *Process;      //! The Command line process
 
     QString CommandBuffer;  //! The buffer holding the command
 
-    bool Authenticated;     //! Determines if the client is authenticated
+    bool isAuthenticated;     //! Determines if the client is authenticated
 
     QString Banner;         //! The welcome banner and password prompt
 
-    /*!
-    * Starts the process
-    */
-    void StartProcess();
+    TelnetLogic *telnetLogic;
+
+    QString strCR; // carriage return
+
+    QString strShell; // shell character >
+
+protected:
 
     /*!
     * Sends the response to the client socket
@@ -92,23 +92,14 @@ protected:
     */
     bool Authenticate(QString Buffer);
 
-    /*!
-    * Processes the upload
-    * @param Command The data buffer
-    */
-    void Upload(QString Command);
+    //
+    QString CleanQString(QString toClean);
 
-    /*!
-    * Processes the download
-    * @param Command The data buffer
-    */
-    void Download(QString Command);
+    //
+    void DispatchCommand(QString command);
 
-    /*!
-    * Returns the name of the file to transfer
-    * @param Filename the file the client is requesting
-    */
-    QString GetFilename(QString Filename);
+    //
+    bool isExit(QString cmd);
 
 };
 

@@ -19,10 +19,12 @@ SOURCES += \
 main.cpp \
     qtelnetserver.cpp \
     telnettcpserver.cpp \
-    telnettcpclient.cpp
+    telnettcpclient.cpp \
+    telnetlogic.cpp
 
 HEADERS += \
     qtelnetserver.h \
     telnettcpserver.h \
-    telnettcpclient.h
+    telnettcpclient.h \
+    telnetlogic.h
 

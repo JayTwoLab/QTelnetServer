@@ -1,11 +1,13 @@
 #ifndef QTELNETSERVER_H
 #define QTELNETSERVER_H
 
+#include <QtGlobal>
 #include <QObject>
 #include <QString>
 #include <QPointer>
 #include <QSettings>
 #include <QByteArray>
+#include <QStringList>
 #include <QCryptographicHash>
 #include <QSettings>
 

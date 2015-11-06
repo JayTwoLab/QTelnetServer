@@ -14,5 +14,5 @@ int main(int argc, char *argv[])
     QTelnetServer ts;
     qDebug() << ts.Start();
 
-    return a.exec();
+    return a.exec(); // use main thread event dispatcher
 }
