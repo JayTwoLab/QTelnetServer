@@ -1,6 +1,7 @@
 QTelnetServer
 =============
 
-Qt telnet server
+telnet server is made by Qt5.x
 
-한글
+
+
