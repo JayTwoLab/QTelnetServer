@@ -19,19 +19,15 @@ class TelnetLogic : public QObject
 {
     Q_OBJECT
 public:
-
-    // constructor
-    explicit TelnetLogic(QObject *parent = 0);
-\
-    // process telnet command
-    QString ProcessCommand(QString command);
-
+    explicit TelnetLogic(QObject *parent = NULL); // constructor
+    QString ProcessCommand(QString command); // process telnet command
 protected:
 
     // command 'setpassword' [password]
     QString  ProcessSetPassword(QStringList slArgs, QString inRet);
 
     // TODO: append your own command
+    // QString  ProcessYourOwnCommand(QStringList slArgs, QString inRet);
 
 };
 

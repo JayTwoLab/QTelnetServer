@@ -17,6 +17,8 @@
 #include "qtelnetserver.h"
 #include "telnetlogic.h"
 
+//----------------------------------------------------------------------------
+//
 QString trimBackSpace(QString strIn)
 {
     QChar chBackSpace = QChar(QLatin1Char('\010')); // backspace
@@ -75,8 +77,8 @@ QString TelnetLogic::ProcessCommand(QString command)
     // command 'setpassword'
     ret = ProcessSetPassword(slArg, ret);
 
-    // TODO: command 'something'
-    // TODO: ...
+    // TODO: command 'YourOwnCommand'
+    //  QString ProcessYourOwnCommand(QStringList slArgs, QString inRet);
 
     return ret;
 }
@@ -84,7 +86,6 @@ QString TelnetLogic::ProcessCommand(QString command)
 
 //----------------------------------------------------------------------------
 //
-
 QString TelnetLogic::ProcessSetPassword(QStringList slArgs, QString inRet)
 {
     // command 'setpassword' [password]
@@ -111,4 +112,15 @@ QString TelnetLogic::ProcessSetPassword(QStringList slArgs, QString inRet)
     return QString( "RESPONSE: success to change password" );
 }
 
-
+//----------------------------------------------------------------------------
+//
+/*
+QString TelnetLogic::ProcessYourOwnCommand(QStringList slArgs, QString inRet)
+{
+    if ( slArgs.at(0) != QString("YourOwnCommand") )
+    {
+        return inRet;
+    }
+    return QString("RESPONSE: done");
+}
+// */
