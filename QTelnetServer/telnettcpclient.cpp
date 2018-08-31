@@ -1,13 +1,21 @@
+// QTelnetServer
+// https://github.com/j2doll/QTelnetServer
 
 #include <cstdio>
 #include <iostream>
 
+#include <QDebug>
+
+#include "qtelnetserver.h"
+#include "telnettcpserver.h"
 #include "telnettcpclient.h"
 #include "telnetlogic.h"
 
 //----------------------------------------------------------------------------
 //
-TelnetTCPClient::TelnetTCPClient(int SocketDescriptor, QObject *parent)
+TelnetTCPClient::TelnetTCPClient(
+        int SocketDescriptor,
+        TelnetTCPServer* parent )
     : QObject(parent)
 {
     strCR = "\r\n";
@@ -20,7 +28,9 @@ TelnetTCPClient::TelnetTCPClient(int SocketDescriptor, QObject *parent)
     Socket = new QTcpSocket(this);
     if(!Socket->setSocketDescriptor(SessionID))
     {
-        std::cerr << SessionID << " Error binding socket\n";
+        std::cerr << QTime::currentTime().toString().toStdString()
+                  << " "
+                  << SessionID << " Error binding socket\n";
         return;
     }
 
@@ -30,7 +40,8 @@ TelnetTCPClient::TelnetTCPClient(int SocketDescriptor, QObject *parent)
     connect( Socket, SIGNAL(readyRead()), this, SLOT(SocketReadyRead()), Qt::DirectConnection);
     connect( Socket, SIGNAL(disconnected()), this, SLOT(SocketDisconnected()), Qt::DirectConnection);
 
-    std::cout << SessionID << " Session Connected.\n";
+    std::cout << QTime::currentTime().toString().toStdString() << " "
+              << SessionID << " Session Connected.\n";
 
     SendResponse(QString("[ Command Shell ]") + strCR);
     SendResponse(QString("Enter a password: "));
@@ -46,14 +57,14 @@ void TelnetTCPClient::SocketReadyRead()
     CommandBuffer.append(Data);
 
     //Check to see if the CommandBuffer has a command
-    if( ! CommandBuffer.endsWith('\n') )
+    if ( ! CommandBuffer.endsWith('\n') )
     {
         return;
     }
 
     //Process the command
 
-    if(!isAuthenticated)
+    if (!isAuthenticated)
     {
         //Authenticate the client
         if ( Authenticate(CommandBuffer) )
@@ -80,7 +91,8 @@ void TelnetTCPClient::SocketReadyRead()
 //
 void TelnetTCPClient::SocketDisconnected()
 {
-    std::cout << SessionID << " session disconnected.\n";
+    std::cout << QTime::currentTime().toString().toStdString() << " "
+              << SessionID << " session disconnected.\n";
 
     //Cleanup
     Socket->deleteLater();
@@ -146,9 +158,40 @@ bool TelnetTCPClient::Authenticate(QString Buffer)
     //check the password
     QString ClientPassword = CleanQString( Buffer.trimmed() );
 
-    QString passwd = "password"; // digit or number
+    // convert password to hassed password
     QString strCmp = ClientPassword.toLatin1();
-    if ( strCmp != passwd )
+
+
+    if (strCmp.isEmpty())
+    {
+        return false;
+    }
+
+    QByteArray hash = QCryptographicHash::hash(strCmp.toLatin1(), QCryptographicHash::Sha1);
+    QString hashedpass = QString(hash.toBase64());
+
+    // read saved password
+    QString strOrganizationName = ORG_NAME;
+    QString strApplicationName = APP_NAME;
+    QSettings settings( strOrganizationName, strApplicationName );
+    QVariant varHashedPassword = settings.value( QString(PASSWORD_KEY) );
+    // AUTH: PASSWORD: TODO: decrypt saved password
+    QString strHashedPassword = varHashedPassword.toString();
+
+    // saved password is not set
+    if ( strHashedPassword.isEmpty() )
+    {
+        QString strOrganizationName = ORG_NAME;
+        QString strApplicationName = APP_NAME;
+        QSettings settings( strOrganizationName, strApplicationName );
+        // AUTH: PASSWORD: TODO: encrypt hased password
+        settings.setValue( QString(PASSWORD_KEY), QVariant(hashedpass) );
+
+        isAuthenticated = true;
+        return isAuthenticated;
+    }
+
+    if ( hashedpass != strHashedPassword ) // compare hased password
     {
         return false;
     }

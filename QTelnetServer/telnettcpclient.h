@@ -1,17 +1,24 @@
+// QTelnetServer
+// https://github.com/j2doll/QTelnetServer
+
 #ifndef TELNETTCPCLIENT_H
 #define TELNETTCPCLIENT_H
 
 #include <QObject>
 #include <QTcpSocket>
-#include <QDebug>
 #include <QDir>
 #include <QByteArray>
 #include <QCryptographicHash>
 #include <QProcess>
 #include <QSettings>
 #include <QFileInfo>
+#include <QDateTime>
+#include <QDate>
+#include <QTime>
 
 class TelnetLogic;
+class QTelnetServer;
+class TelnetTCPServer;
 
 class TelnetTCPClient : public QObject
 {
@@ -20,7 +27,7 @@ class TelnetTCPClient : public QObject
 public:
 
     // constructor
-    explicit TelnetTCPClient(int SocketDescriptor,QObject *parent = 0);
+    explicit TelnetTCPClient(int SocketDescriptor, TelnetTCPServer *parent = 0);
 
     /*!
     * Returns the socket ID
@@ -70,8 +77,6 @@ protected:
 
     QTcpSocket *Socket;     //! The TCP Socket
 
-    // QProcess *Process;      //! The Command line process
-
     QString CommandBuffer;  //! The buffer holding the command
 
     bool isAuthenticated;     //! Determines if the client is authenticated
@@ -83,6 +88,8 @@ protected:
     QString strCR; // carriage return
 
     QString strShell; // shell character >
+
+    QString strPasswordHash;
 
 protected:
 

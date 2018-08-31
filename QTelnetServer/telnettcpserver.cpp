@@ -1,13 +1,16 @@
+// QTelnetServer
+// https://github.com/j2doll/QTelnetServer
 
 #include <iostream>
 
+#include "qtelnetserver.h"
 #include "telnettcpclient.h"
 #include "telnettcpserver.h"
 
 //-----------------------------------------------------------------------------
 //
-TelnetTCPServer::TelnetTCPServer(QObject *parent) :
-    QTcpServer(parent)
+TelnetTCPServer::TelnetTCPServer(QObject *parent)
+    : QTcpServer(parent)
 {
 
 }
@@ -30,7 +33,8 @@ int TelnetTCPServer::StartServer(qint16 port)
         return (-1);
     }
 
-    std::cout << "listening...\n";
+    std::cout << QTime::currentTime().toString().toStdString() << " "
+              << "listening...\n";
 
     //notify connected objects
     emit OnStarted();
@@ -44,7 +48,8 @@ void TelnetTCPServer::StopServer()
 {
     this->close();
 
-    std::cout << " server stopped\n";
+    std::cout << QTime::currentTime().toString().toStdString() << " "
+              << " server stopped\n";
 
     //notify connected objects
     emit OnStopped();
@@ -53,9 +58,23 @@ void TelnetTCPServer::StopServer()
 
 //-----------------------------------------------------------------------------
 //
+bool TelnetTCPServer::setPasswordHash(QString hashedpass)
+{
+    QString strOrganizationName = ORG_NAME;
+    QString strApplicationName = APP_NAME;
+    QSettings settings( strOrganizationName, strApplicationName );
+    // AUTH: PASSWORD: TODO: encrypt saved password
+    settings.setValue( QString(PASSWORD_KEY), QVariant(hashedpass) );
+
+    return true;
+}
+
+//-----------------------------------------------------------------------------
+//
 void TelnetTCPServer::incomingConnection(int socketDescriptor)
 {
-    std::cout << socketDescriptor << " Connecting..." << socketDescriptor << "\n";
+    std::cout << QTime::currentTime().toString().toStdString() << " "
+             << socketDescriptor << " Connecting..." << socketDescriptor << "\n";
 
     //Accept the incomming client
 

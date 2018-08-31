@@ -1,3 +1,6 @@
+// QTelnetServer
+// https://github.com/j2doll/QTelnetServer
+
 #ifndef QTELNETSERVER_H
 #define QTELNETSERVER_H
 
@@ -10,13 +13,19 @@
 #include <QStringList>
 #include <QCryptographicHash>
 #include <QSettings>
+#include <QDateTime>
+#include <QDate>
+#include <QTime>
+
+#define ORG_NAME        "Jay Two"
+#define APP_NAME        "QTelnetSample"
+#define PASSWORD_KEY    "password"
 
 class TelnetTCPServer;
 
 class QTelnetServer : public QObject
 {
     Q_OBJECT
-
 public:
 
     // constructor
@@ -31,16 +40,7 @@ public:
     // stop telnet server
     int Stop();
 
-    /**
-    * Returns a QStringList of available commands
-    */
-    QStringList Commands() const;
-
-    /**
-    * Askes the plugin to execute a command and returns the results
-    * @param command The command to execute
-    * @param args A list of arguments for the command
-    */
+    // Askes the plugin to execute a command and returns the results
     QString Exec(QString command, QStringList args) const;
 
 protected:

@@ -1,8 +1,6 @@
 ########################################################################
-#
 # QTelnetServer
-#   Qt 5.x
-#
+# https://github.com/j2doll/QTelnetServer
 ########################################################################
 
 
@@ -17,14 +15,14 @@ TEMPLATE = app
 
 SOURCES += \
 main.cpp \
-    qtelnetserver.cpp \
-    telnettcpserver.cpp \
-    telnettcpclient.cpp \
-    telnetlogic.cpp
+qtelnetserver.cpp \
+telnettcpserver.cpp \
+telnettcpclient.cpp \
+telnetlogic.cpp
 
 HEADERS += \
-    qtelnetserver.h \
-    telnettcpserver.h \
-    telnettcpclient.h \
-    telnetlogic.h
+qtelnetserver.h \
+telnettcpserver.h \
+telnettcpclient.h \
+telnetlogic.h
 

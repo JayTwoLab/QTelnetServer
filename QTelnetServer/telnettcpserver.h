@@ -1,3 +1,6 @@
+// QTelnetServer
+// https://github.com/j2doll/QTelnetServer
+
 #ifndef TELNETTCPSERVER_H
 #define TELNETTCPSERVER_H
 
@@ -15,7 +18,7 @@ public:
     * Constructor
     * @param parent The parent object
     */
-    explicit TelnetTCPServer(QObject *parent = 0);
+    explicit TelnetTCPServer(QObject *parent = NULL);
 
     virtual ~TelnetTCPServer();
 
@@ -29,6 +32,8 @@ public:
     * Stops the TCP Server
     */
     void StopServer();
+
+    bool setPasswordHash(QString hashedpass);
 
 signals:
 
@@ -51,6 +56,8 @@ protected:
     * @param socketDescriptor The descriptor of the conection
     */
     void incomingConnection(int socketDescriptor);
+
+
 
 
 };

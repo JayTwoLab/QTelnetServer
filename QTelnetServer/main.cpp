@@ -1,4 +1,7 @@
-// mmain.cpp
+// QTelnetServer
+// https://github.com/j2doll/QTelnetServer
+
+// main.cpp
 //
 
 #include <QCoreApplication>
@@ -12,7 +15,8 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
     QTelnetServer ts;
-    qDebug() << ts.Start();
+    quint16 telnetport = 10023; // telnet port
+    qDebug() << ts.Start(telnetport);
 
     return a.exec(); // use main thread event dispatcher
 }
