@@ -1,4 +1,4 @@
-// QTelnetServer
+// QTelnetServer, MIT License
 // https://github.com/j2doll/QTelnetServer
 
 #include <iostream>

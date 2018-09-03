@@ -1,4 +1,4 @@
-// QTelnetServer
+// QTelnetServer, MIT License
 // https://github.com/j2doll/QTelnetServer
 
 #include <cstdio>
@@ -65,10 +65,25 @@ void TelnetTCPClient::SocketReadyRead()
             if ( Data.at(2) == 65 )
             {
                 // "UP ARROW RECIEVED";
-                // QString strCache = slCacheString.back();
-                // QString strTrim = strCache.trimmed().toLatin1();
-                // qDebug() << strTrim;
+
+                /*
+                QString strCache = slCacheString.back();
+                QString strTrim = strCache.trimmed().toLatin1();
+                 qDebug() << strTrim;
+
+                QByteArray crData;
+                crData.push_back( ((char)'\r') );
+                crData.push_back( ((char)'\n') );
+                Socket->write( crData );
+
+                // QByteArray DownData;
+                // DownData.push_back( ((char)27) );
+                // DownData.push_back( ((char)91) );
+                // DownData.push_back( ((char)66) );
+                // Socket->write( DownData ); // down
+
                 // Socket->write( strTrim.toLatin1() );
+                */
             }
 
             if ( Data.at(2) == 66 )
@@ -190,7 +205,6 @@ bool TelnetTCPClient::Authenticate(QString Buffer)
 
     // convert password to hassed password
     QString strCmp = ClientPassword.toLatin1();
-
 
     if (strCmp.isEmpty())
     {
