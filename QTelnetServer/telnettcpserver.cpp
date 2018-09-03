@@ -33,8 +33,9 @@ int TelnetTCPServer::StartServer(qint16 port)
         return (-1);
     }
 
-    std::cout << QTime::currentTime().toString().toStdString() << " "
-              << "listening...\n";
+    std::cout
+        << QTime::currentTime().toString().toStdString() << " "
+        << "listening...\n";
 
     //notify connected objects
     emit OnStarted();
@@ -48,8 +49,9 @@ void TelnetTCPServer::StopServer()
 {
     this->close();
 
-    std::cout << QTime::currentTime().toString().toStdString() << " "
-              << " server stopped\n";
+    std::cout
+        << QTime::currentTime().toString().toStdString() << " "
+        << " server stopped\n";
 
     //notify connected objects
     emit OnStopped();
@@ -73,8 +75,9 @@ bool TelnetTCPServer::setPasswordHash(QString hashedpass)
 //
 void TelnetTCPServer::incomingConnection(int socketDescriptor)
 {
-    std::cout << QTime::currentTime().toString().toStdString() << " "
-             << socketDescriptor << " Connecting..." << socketDescriptor << "\n";
+    std::cout
+        << QTime::currentTime().toString().toStdString() << " "
+        << socketDescriptor << " Connecting..." << socketDescriptor << "\n";
 
     //Accept the incomming client
 

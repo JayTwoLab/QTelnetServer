@@ -53,14 +53,44 @@ TelnetTCPClient::TelnetTCPClient(
 void TelnetTCPClient::SocketReadyRead()
 {
     //Keep adding to the command buffer
+
     QByteArray Data = Socket->readAll();
     CommandBuffer.append(Data);
+
+    if ( Data.size() >= 1 ) {
+
+        if( Data.at(0) == 27 &&
+            Data.at(1) == 91 )
+        {
+            if ( Data.at(2) == 65 )
+            {
+                // "UP ARROW RECIEVED";
+                // QString strCache = slCacheString.back();
+                // QString strTrim = strCache.trimmed().toLatin1();
+                // qDebug() << strTrim;
+                // Socket->write( strTrim.toLatin1() );
+            }
+
+            if ( Data.at(2) == 66 )
+            {
+                // "DOWN ARROW RECIEVED";
+
+            }
+        }
+
+    }
 
     //Check to see if the CommandBuffer has a command
     if ( ! CommandBuffer.endsWith('\n') )
     {
         return;
     }
+
+    // push back to cache strings
+    if ( slCacheString.size() >= 100 ) {
+        slCacheString.pop_front();
+    }
+    slCacheString.push_back( CommandBuffer.trimmed().toLatin1() );
 
     //Process the command
 
@@ -242,16 +272,18 @@ void TelnetTCPClient::DispatchCommand(QString command)
 //
 bool TelnetTCPClient::isExit(QString cmd)
 {
-    QString strExit = QString("exit");
-    if ( cmd == strExit )
-    {
-        return true;
-    }
+    cmd = cmd.toLower(); // make lower
 
-    QString strQuit = QString("quit");
-    if ( cmd == strQuit )
+    if ( cmd == QString("exit") ||
+        cmd == QString(".exit") ||
+        cmd == QString("exit()") ||
+        cmd == QString("exit;") ||
+        cmd == QString("quit") ||
+        cmd == QString(".quit") ||
+        cmd == QString("quit()") ||
+        cmd == QString("quit;") )
     {
-        return true;
+        return true; // it is exit string
     }
 
     return false;

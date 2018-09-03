@@ -15,6 +15,8 @@
 #include <QDateTime>
 #include <QDate>
 #include <QTime>
+#include <QString>
+#include <QStringList>
 
 class TelnetLogic;
 class QTelnetServer;
@@ -90,6 +92,8 @@ protected:
     QString strShell; // shell character >
 
     QString strPasswordHash;
+
+    QStringList slCacheString;
 
 protected:
 

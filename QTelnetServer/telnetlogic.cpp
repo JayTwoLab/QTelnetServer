@@ -59,10 +59,8 @@ QString TelnetLogic::ProcessCommand(QString command)
     QString ret;
     // ret = command; // echo string
 
-    QString lowCMD = command.trimmed().toLower(); // lower case command string
-    QString strRemoveBackSpace = trimBackSpace(lowCMD); // remove backspace and -re-backspace charater
-
-    // qDebug() << QTime::currentTime().toString() << " " << strRemoveBackSpace;
+    // QString lowCMD = command.trimmed().toLower(); // lower case command string
+    QString strRemoveBackSpace = trimBackSpace( command.trimmed() ); // remove backspace and pre-backspace character
 
     // parse command
     std::istringstream iss( strRemoveBackSpace.toStdString() );
@@ -77,10 +75,10 @@ QString TelnetLogic::ProcessCommand(QString command)
     // command 'setpassword'
     ret = ProcessSetPassword(slArg, ret);
 
-    // TODO: command 'YourOwnCommand'
-    //  QString ProcessYourOwnCommand(QStringList slArgs, QString inRet);
+    // TODO: define command 'YourOwnCommand'
+    ret = ProcessYourOwnCommand(slArg, ret);
 
-    return ret;
+    return ret; // return string is telnet response tring
 }
 
 
@@ -90,17 +88,18 @@ QString TelnetLogic::ProcessSetPassword(QStringList slArgs, QString inRet)
 {
     // command 'setpassword' [password]
 
-    if ( slArgs.at(0) != QString("setpassword") )
+    if ( slArgs.at(0) != QString("setpassword") ) // command name is 'setpassword'
     {
         return inRet;
     }
 
-    if ( slArgs.size() <= 1 )
+    if ( slArgs.size() <= 1 ) // password parameter is needed.
     {
         return inRet;
     }
 
-    QByteArray hash = QCryptographicHash::hash( slArgs.at(1).toLatin1(), QCryptographicHash::Sha1);
+    // make from password string to hash string
+    QByteArray hash = QCryptographicHash::hash( slArgs.at(1).toLatin1(), QCryptographicHash::Sha1 );
     QString hashedpass = QString( hash.toBase64() );
 
     QString strOrganizationName = ORG_NAME;
@@ -114,13 +113,17 @@ QString TelnetLogic::ProcessSetPassword(QStringList slArgs, QString inRet)
 
 //----------------------------------------------------------------------------
 //
-/*
 QString TelnetLogic::ProcessYourOwnCommand(QStringList slArgs, QString inRet)
 {
     if ( slArgs.at(0) != QString("YourOwnCommand") )
     {
         return inRet;
     }
+
+    foreach (QString strArg, slArgs) {
+        qDebug() << strArg;
+    }
+
     return QString("RESPONSE: done");
 }
-// */
+

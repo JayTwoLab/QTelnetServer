@@ -26,8 +26,8 @@ protected:
     // command 'setpassword' [password]
     QString  ProcessSetPassword(QStringList slArgs, QString inRet);
 
-    // TODO: append your own command
-    // QString  ProcessYourOwnCommand(QStringList slArgs, QString inRet);
+    // TODO: define your own command
+    QString  ProcessYourOwnCommand(QStringList slArgs, QString inRet);
 
 };
 
