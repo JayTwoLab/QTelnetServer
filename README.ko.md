@@ -57,8 +57,8 @@ QString TelnetLogic::ProcessYourOwnCommand(QStringList slArgs, QString inRet)
 
 ## 테스트 환경
 
-- Qt 5.x
+- Qt 5
 
 ## 라이센스
 
-- MIT 라이센스
+- QTelnetServer는 MIT 라이센스입니다. [https://github.com/j2doll/QTelnetServer](https://github.com/j2doll/QTelnetServer)

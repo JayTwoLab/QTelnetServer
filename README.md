@@ -57,8 +57,8 @@ QString TelnetLogic::ProcessYourOwnCommand(QStringList slArgs, QString inRet)
 
 ## Tested Environment
 
-- Qt 5.x
+- Qt 5
 
-## License
+## License and links
 
-- MIT License
+- QTelnetServer is under MIT license. [https://github.com/j2doll/QTelnetServer](https://github.com/j2doll/QTelnetServer)
