@@ -1,5 +1,4 @@
-// QTelnetServer, MIT License
-// https://github.com/j2doll/QTelnetServer
+// telnettcpserver.h
 
 #ifndef TELNETTCPSERVER_H
 #define TELNETTCPSERVER_H
@@ -55,10 +54,9 @@ protected:
     * Processes incomming TCP connections
     * @param socketDescriptor The descriptor of the conection
     */
-    void incomingConnection(int socketDescriptor);
+    virtual void incomingConnection(qintptr socketDescriptor);
 
-
-
+    // virtual void incomingConnection(int socketDescriptor); // old Qt
 
 };
 

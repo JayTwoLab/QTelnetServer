@@ -1,5 +1,4 @@
-// QTelnetServer, MIT License
-// https://github.com/j2doll/QTelnetServer
+// telnettcpcclient.h
 
 #ifndef TELNETTCPCLIENT_H
 #define TELNETTCPCLIENT_H

@@ -8,6 +8,7 @@
 
 :one: Create telnet server
 
+
 ```cpp
 // main.cpp
 int main(int argc, char *argv[])
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     return a.exec(); // use main thread event dispatcher. you may use multi-thread.
 }
 ```
+
 :two: Define your own telnet command fucntion on header file (TelnetServer.h)
 
 ```h
@@ -38,6 +40,7 @@ protected:
     QString  ProcessYourOwnCommand(QStringList slArgs, QString inRet);
 };
 ```
+
 :three: Define your own telnet command fucntion on source file (TelnetServer.cpp) 
 
 ```cpp
@@ -55,10 +58,50 @@ QString TelnetLogic::ProcessYourOwnCommand(QStringList slArgs, QString inRet)
 }
 ```
 
+:four: Set ProcessYourOwnCommand() (telnetlogic.cpp)
+
+```cpp
+QString TelnetLogic::ProcessCommand(QString command)
+{
+    if ( command.isEmpty() )
+    {
+        return command;
+    }
+
+    QString ret;
+    // ret = command; // echo string
+
+    // QString lowCMD = command.trimmed().toLower(); // lower case command string
+    QString strRemoveBackSpace = trimBackSpace( command.trimmed() ); // remove backspace and pre-backspace character
+
+    // parse command
+    std::istringstream iss( strRemoveBackSpace.toStdString() );
+    std::vector<std::string> parseResults((std::istream_iterator<std::string>(iss)),
+                                     std::istream_iterator<std::string>());
+    QStringList slArg;
+    foreach (std::string ssArg, parseResults) {
+        QString strArg = QString::fromStdString( ssArg );
+        slArg.push_back( strArg );
+    }
+
+    // command 'setpassword'
+    ret = ProcessSetPassword(slArg, ret);
+
+    // TODO: define command 'YourOwnCommand'
+    ret = ProcessYourOwnCommand(slArg, ret);
+
+    return ret; // return string is telnet response tring
+}
+```
+
 ## Tested Environment
 
-- Qt 5
+- Qt 5.12 (Do not use old Qt!)
+- Qt 6
 
-## License and links
+## License
 
-- QTelnetServer is under MIT license. [https://github.com/j2doll/QTelnetServer](https://github.com/j2doll/QTelnetServer)
+- QTelnetServer is under MIT license.
+
+## Links
+- https://github.com/JayTwoLab/QTelnetServer

@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     return a.exec(); // use main thread event dispatcher. you may use multi-thread.
 }
 ```
+
 :two: 자신만의 텔넷 명령 함수를 정의합니다. 헤더 파일(TelnetServer.h)
 
 ```h
@@ -38,6 +39,7 @@ protected:
     QString  ProcessYourOwnCommand(QStringList slArgs, QString inRet);
 };
 ```
+
 :three:자신만의 텔넷 명령 함수를 정의합니다. 소스 파일(TelnetServer.cpp) 
 
 ```cpp
@@ -55,10 +57,51 @@ QString TelnetLogic::ProcessYourOwnCommand(QStringList slArgs, QString inRet)
 }
 ```
 
+:four: ProcessYourOwnCommand()를 설정한다 (telnetlogic.cpp)
+
+```cpp
+QString TelnetLogic::ProcessCommand(QString command)
+{
+    if ( command.isEmpty() )
+    {
+        return command;
+    }
+
+    QString ret;
+    // ret = command; // echo string
+
+    // QString lowCMD = command.trimmed().toLower(); // lower case command string
+    QString strRemoveBackSpace = trimBackSpace( command.trimmed() ); // remove backspace and pre-backspace character
+
+    // parse command
+    std::istringstream iss( strRemoveBackSpace.toStdString() );
+    std::vector<std::string> parseResults((std::istream_iterator<std::string>(iss)),
+                                     std::istream_iterator<std::string>());
+    QStringList slArg;
+    foreach (std::string ssArg, parseResults) {
+        QString strArg = QString::fromStdString( ssArg );
+        slArg.push_back( strArg );
+    }
+
+    // command 'setpassword'
+    ret = ProcessSetPassword(slArg, ret);
+
+    // TODO: define command 'YourOwnCommand'
+    ret = ProcessYourOwnCommand(slArg, ret);
+
+    return ret; // return string is telnet response tring
+}
+```
+
 ## 테스트 환경
 
-- Qt 5
+- Qt 5.12 (Do not use old Qt!)
+- Qt 6
 
 ## 라이센스
 
-- QTelnetServer는 MIT 라이센스입니다. [https://github.com/j2doll/QTelnetServer](https://github.com/j2doll/QTelnetServer)
+- QTelnetServer는 MIT 라이센스입니다. 
+
+## 링크
+- https://github.com/JayTwoLab/QTelnetServer
+

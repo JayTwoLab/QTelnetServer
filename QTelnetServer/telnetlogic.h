@@ -1,5 +1,4 @@
-// QTelnetServer, MIT License
-// https://github.com/j2doll/QTelnetServer
+// telnetlogic.h
 
 #ifndef TELNETLOGIC_H
 #define TELNETLOGIC_H

@@ -73,7 +73,8 @@ bool TelnetTCPServer::setPasswordHash(QString hashedpass)
 
 //-----------------------------------------------------------------------------
 //
-void TelnetTCPServer::incomingConnection(int socketDescriptor)
+// void TelnetTCPServer::incomingConnection(int socketDescriptor) // old Qt
+void TelnetTCPServer::incomingConnection(qintptr socketDescriptor)
 {
     std::cout
         << QTime::currentTime().toString().toStdString() << " "

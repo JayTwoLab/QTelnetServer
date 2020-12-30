@@ -13,6 +13,9 @@
 #include <QLatin1Char>
 #include <QVector>
 #include <QDebug>
+#include <QDateTime>
+#include <QDate>
+#include <QTime>
 
 #include "qtelnetserver.h"
 #include "telnetlogic.h"
@@ -66,11 +69,18 @@ QString TelnetLogic::ProcessCommand(QString command)
     std::istringstream iss( strRemoveBackSpace.toStdString() );
     std::vector<std::string> parseResults((std::istream_iterator<std::string>(iss)),
                                      std::istream_iterator<std::string>());
+
+
+    qDebug() << QDateTime::currentDateTime();
+
     QStringList slArg;
     foreach (std::string ssArg, parseResults) {
         QString strArg = QString::fromStdString( ssArg );
         slArg.push_back( strArg );
+
+        qDebug() << strArg;
     }
+    // qDebug() << QString("\n");
 
     // command 'setpassword'
     ret = ProcessSetPassword(slArg, ret);

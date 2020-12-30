@@ -18,5 +18,7 @@ int main(int argc, char *argv[])
     quint16 telnetport = 10023; // telnet port
     qDebug() << ts.Start(telnetport);
 
-    return a.exec(); // use main thread event dispatcher
+    int ret = a.exec(); // use main thread event dispatcher
+
+    return ret;
 }

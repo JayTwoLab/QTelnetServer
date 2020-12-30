@@ -1,5 +1,4 @@
-// QTelnetServer, MIT License
-// https://github.com/j2doll/QTelnetServer
+// qtelnetserver.h
 
 #ifndef QTELNETSERVER_H
 #define QTELNETSERVER_H
@@ -19,7 +18,7 @@
 
 #define ORG_NAME        "Jay Two"
 #define APP_NAME        "QTelnetSample"
-#define PASSWORD_KEY    "password"
+#define PASSWORD_KEY    "password" // default password
 
 class TelnetTCPServer;
 

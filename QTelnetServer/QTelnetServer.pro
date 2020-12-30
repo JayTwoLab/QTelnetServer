@@ -1,5 +1,6 @@
 ########################################################################
-# QTelnetServer, MIT License
+# QTelnetServer
+# MIT License
 # https://github.com/j2doll/QTelnetServer
 ########################################################################
 
