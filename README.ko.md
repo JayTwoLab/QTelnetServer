@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 :two: 자신만의 텔넷 명령 함수를 정의합니다. 헤더 파일(TelnetServer.h)
 
-```h
+```cpp
 class TelnetLogic : public QObject
 {
     Q_OBJECT
