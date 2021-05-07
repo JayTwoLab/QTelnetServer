@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
 :two: Define your own telnet command fucntion on header file (TelnetServer.h)
 
-```h
+```cpp
 class TelnetLogic : public QObject
 {
     Q_OBJECT
